@@ -1,0 +1,36 @@
+---
+import type { ReadonlyResumeData } from "../data/resume";
+const { resume } = Astro.props as { resume: ReadonlyResumeData };
+---
+
+<section id="experiencia" class="card experience-section" aria-labelledby="exp-title">
+  <div class="section-header">
+    <span class="section-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+      </svg>
+    </span>
+    <h2 id="exp-title">Experiencia</h2>
+  </div>
+
+  <ol class="timeline-list" reversed>
+    {resume.experience.map((item) => (
+      <li class="timeline-entry">
+        <div class="timeline-date">{item.period}</div>
+        <div class="timeline-dot-col">
+          <span class="timeline-dot" aria-hidden="true"></span>
+        </div>
+        <div class="timeline-body">
+          <div class="timeline-top">
+            <h3 class="timeline-role">{item.role}</h3>
+            {item.current && <span class="badge-current">Actual</span>}
+          </div>
+          <p class="timeline-company">{item.company}</p>
+          <p class="timeline-summary">{item.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

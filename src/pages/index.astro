@@ -1,0 +1,29 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import ProfileSection from "../components/ProfileSection.astro";
+import ExperienceTimeline from "../components/ExperienceTimeline.astro";
+import EducationSection from "../components/EducationSection.astro";
+import SkillsSection from "../components/SkillsSection.astro";
+import ContactSection from "../components/ContactSection.astro";
+import Footer from "../components/Footer.astro";
+import { resumeData } from "../data/resume";
+---
+
+<MainLayout>
+  <HeroSection resume={resumeData} />
+
+  <div class="content-columns">
+    <div class="content-col">
+      <ProfileSection resume={resumeData} />
+      <EducationSection resume={resumeData} />
+      <SkillsSection resume={resumeData} />
+    </div>
+    <div class="content-col">
+      <ExperienceTimeline resume={resumeData} />
+    </div>
+  </div>
+
+  <ContactSection resume={resumeData} />
+  <Footer />
+</MainLayout>

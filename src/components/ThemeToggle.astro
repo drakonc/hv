@@ -1,0 +1,57 @@
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  aria-label="Cambiar tema"
+  aria-pressed="false"
+>
+  <span class="theme-toggle__icon" aria-hidden="true">◐</span>
+  <span class="theme-toggle__label">Tema</span>
+</button>
+
+<script is:inline>
+  (() => {
+    const storageKey = "theme-preference";
+    const root = document.documentElement;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const getPreferredTheme = () => {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") return stored;
+      return "dark";
+    };
+
+    const syncToggles = (theme) => {
+      document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+        toggle.setAttribute("aria-pressed", String(theme === "dark"));
+        toggle.setAttribute(
+          "aria-label",
+          theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro",
+        );
+        const icon = toggle.querySelector(".theme-toggle__icon");
+        if (icon) icon.textContent = theme === "dark" ? "☀" : "◐";
+      });
+    };
+
+    const applyTheme = (theme, persist) => {
+      root.dataset.theme = theme;
+      syncToggles(theme);
+      if (persist) localStorage.setItem(storageKey, theme);
+    };
+
+    const theme = getPreferredTheme();
+    applyTheme(theme, false);
+
+    document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const next = root.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(next, true);
+      });
+    });
+
+    media.addEventListener("change", (e) => {
+      if (localStorage.getItem(storageKey)) return;
+      applyTheme(e.matches ? "dark" : "light", false);
+    });
+  })();
+</script>

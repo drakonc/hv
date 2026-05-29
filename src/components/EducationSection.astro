@@ -1,0 +1,50 @@
+---
+import type { ReadonlyResumeData } from "../data/resume";
+const { resume } = Astro.props as { resume: ReadonlyResumeData };
+---
+
+<section id="educacion" class="card education-section" aria-labelledby="edu-title">
+  <div class="section-header">
+    <span class="section-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/>
+        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+    </span>
+    <h2 id="edu-title">Educación</h2>
+  </div>
+
+  <ul class="edu-items" aria-label="Formación académica">
+    {resume.education.map((item) => (
+      <li class="edu-item">
+        <div class="edu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div>
+          <p class="edu-institution">{item.institution}</p>
+          <h3 class="edu-title">{item.title}</h3>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  {resume.certifications.length > 0 && (
+    <div style="margin-top: 1rem;">
+      <p style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; margin-bottom: 0.5rem;">
+        Certificaciones
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+        {resume.certifications.map((cert) => (
+          <span style="font-size: 0.75rem; padding: 0.22rem 0.6rem; border-radius: var(--r); border: 1px solid var(--border-hi); background: var(--glow); color: var(--accent);">
+            {cert}
+          </span>
+        ))}
+      </div>
+    </div>
+  )}
+</section>
