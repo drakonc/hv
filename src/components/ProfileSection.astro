@@ -7,6 +7,9 @@ const initials = resume.name
   .filter((_, i) => i < 3)
   .map((n) => n[0])
   .join("");
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const photoSrc = resume.photo ? `${base}${resume.photo}` : null;
 ---
 
 <section id="perfil" class="card profile-section" aria-labelledby="perfil-title">
@@ -24,8 +27,8 @@ const initials = resume.name
   <div class="profile-body">
     <!-- Avatar -->
     <div class="profile-avatar">
-      {resume.photo
-        ? <img src={resume.photo} alt={resume.name} />
+      {photoSrc
+        ? <img src={photoSrc} alt={resume.name} />
         : <div class="avatar-placeholder">{initials}</div>
       }
     </div>
